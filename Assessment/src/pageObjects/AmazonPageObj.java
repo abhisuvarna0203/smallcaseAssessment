@@ -36,10 +36,10 @@ public class AmazonPageObj {
 	@FindBy(how = How.XPATH, using = "//div[@id='suggestions']/div")
 	public WebElement FirstItemInList;
 
-	@FindBy(how = How.XPATH, using = "//div/div[1]//span[3]/div[2]/div[2]//a/span[1]/span[2]/span[2]")
+	@FindBy(how = How.XPATH, using = "(//a/span[contains(text(),'S21 Ultra')])[1]/../../../../div[3]//a/span[1]/span[2]/span[2]")
 	public WebElement FirstItemPrice;
 
-	@FindBy(how = How.XPATH, using = "(//span[3]/div[2]//div[1]/h2/a)[1]")
+	@FindBy(how = How.XPATH, using = "(//a/span[contains(text(),'S21 Ultra')])[1]")
 	public WebElement FirstItem;
 
 	@FindBy(how = How.XPATH, using = "//input[@id='add-to-cart-button']")

@@ -19,12 +19,17 @@ public class SecondScenario {
 
 	public void executeSecondScenario(String itemName) {
 		String flipKartPrice = "", amazonPrice = "";
-		flipKartTest = new FirstScenario(driver);
 		flipKartTest.executeFirstScenario(itemName);
 		flipKartPrice = flipKartTest.PrintPriceinCart();
 		System.out.println("********Search Item in Amazon********");
 		driver.get("https://www.amazon.in/");
-		// amazonTest.setPinCode();
+		amazonTest.setPinCode();
+		try {
+			Thread.sleep(4000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		common.SearchAndClickItem(amazonTest.SearchBar, itemName, amazonTest.FirstItemInList);
 		String message = "Price in Amazon Search page : ";
 		common.PrintItemPrice(amazonTest.FirstItemPrice, amazonTest.FirstItem, "amazon", message);
