@@ -1,6 +1,10 @@
 package methods;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import pageObjects.AmazonPageObj;
 
@@ -24,13 +28,29 @@ public class SecondScenario {
 		System.out.println("********Search Item in Amazon********");
 		driver.get("https://www.amazon.in/");
 		amazonTest.setPinCode();
+//		try {
+//			Thread.sleep(4000);
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		// WebDriverWait wait = new WebDriverWait(driver, 20);
+		// wait.until(ExpectedConditions.refreshed(ExpectedConditions.stalenessOf(amazonTest.SearchBar)));
 		try {
-			Thread.sleep(4000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			common.SearchAndClickItem(amazonTest.SearchBar, itemName, amazonTest.FirstItemInList);
+		} catch (StaleElementReferenceException E) {
+			int count = 5;
+			while (count >= 0) {
+				try {
+					amazonTest.SearchBar.sendKeys(itemName);
+					WebDriverWait wait = new WebDriverWait(driver, 20);
+					wait.until(ExpectedConditions.visibilityOf(amazonTest.FirstItemInList)).click();
+					break;
+				} catch (Exception e) {
+					count--;
+				}
+			}
 		}
-		common.SearchAndClickItem(amazonTest.SearchBar, itemName, amazonTest.FirstItemInList);
 		String message = "Price in Amazon Search page : ";
 		common.PrintItemPrice(amazonTest.FirstItemPrice, amazonTest.FirstItem, "amazon", message);
 		common.AddItemToCart(amazonTest.AddToCart);
